@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Variable</title>
+    <link rel="stylesheet" href="../normalize.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <label for="spacing">Spacing</label>
+        <input
+          type="range"
+          name="spacing"
+          id="spacing"
+          min="0"
+          max="100"
+          data-sizing="px"
+          value="5"
+        />
+        <label for="padding">Padding</label>
+        <input
+          type="range"
+          name="blur"
+          id="blur"
+          min="0"
+          max="100"
+          data-sizing="px"
+          value="5"
+        />
+        <label for="base">Color</label>
+        <input type="color" name="base" id="base" value="#ffc600" />
+      </div>
+      <div>
+        <img src="image1.jpg" alt="Human" />
+      </div>
+    </div>
+    <style>
+      :root {
+        --base: #ffc600;
+        --spacing: 10px;
+        --blur: 10px;
+      }
+      img {
+        padding: var(--spacing);
+        background-color: var(--base);
+        filter: blur(var(--blur));
+      }
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        flex: 1;
+        min-height: 100vh;
+      }
+      div {
+        margin-top: 2rem;
+      }
+    </style>
+
+    <script>
+      const inputs = Array.from(document.querySelectorAll('input'));
+      function updateValue() {
+        console.log(`--${this.name}`);
+        const suffix = this.dataset.sizing || '';
+        document.documentElement.style.setProperty(
+          `--${this.name}`,
+          this.value + suffix
+        );
+      }
+      inputs.forEach((input) => input.addEventListener('change', updateValue));
+      // inputs.forEach((input) =>
+      //   input.addEventListener('mousemove', updateValue)
+      // );
+    </script>
+  </body>
+</html>
